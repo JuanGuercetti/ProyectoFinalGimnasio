@@ -110,6 +110,9 @@ function confirmarSocio() {
 	    if (result.isConfirmed) {
 
 	    	socios.push(JSON.parse(localStorage.getItem("socioStorage")));
+
+	    	// Ver a donde envia los socios creados
+
 	    	localStorage.clear();
 
 	      Swal.fire({
@@ -164,6 +167,8 @@ const consultaSocio = (e,funcion) => {
 
 
 const consultaSocio = (e) => {
+	// hacer async y que traiga los datos del json
+
 	e.preventDefault();
 
 	let dni = e.target.elements[0].value;
@@ -191,6 +196,7 @@ const consultaSocio = (e) => {
 
 
 function mostrarListado() {
+	// hacer async y que traiga los datos del json
 	// socios.forEach(Hacer una card, código HTML)
 }
 
@@ -237,6 +243,13 @@ function pagoCuota(socio) {
 		socio.abono.vigencia = now.plus({ days: 30 }).toLocaleString();
 	}
 };
+
+
+function eliminarSocio(dni) {
+	// hacer async y que traiga los datos del json
+	// let filtrados = socios.filter((socio) => socio.dni != dni)
+	// min 30 after storage
+}
 
 
 // Eventos
