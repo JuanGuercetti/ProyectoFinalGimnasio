@@ -1,4 +1,5 @@
-// Variables
+//		-----		Variables
+
 
 const btnAgregar = document.getElementById("btnAgregar");
 const btnConsultas = document.getElementById("btnConsultas");
@@ -24,11 +25,13 @@ class Socio {
 let socios = [];
 
 
-// Funciones
+
+
+// 		-----		 Funciones
 
 const obtenerSocios = async () => {
 	try {
-	    let response = await fetch("./data.json");
+	    let response = await fetch("./db/data.json");
 	    let data = await response.json();
 	    socios = data;
 	    return data;
@@ -38,9 +41,6 @@ const obtenerSocios = async () => {
 	    return null;
 	  }
 };
-
-// Traigo los datos del json al abrir la página
-obtenerSocios();
 
 
 
@@ -81,6 +81,7 @@ function agregarNuevoSocio() {
 	let formAgregar = document.getElementById("form-agregar");
 	formAgregar.addEventListener("submit", nuevoSocio);
 };
+
 
 
 const nuevoSocio = (e) => {
@@ -145,6 +146,7 @@ function confirmarSocio() {
 };
 
 
+
 function crearConsulta() {
 	// Borrar forms previos
 	mainContainer.innerHTML = "";
@@ -166,6 +168,7 @@ function crearConsulta() {
 	let formConsultas = document.getElementById("form-consultas");
 	formConsultas.addEventListener("submit", consultaSocio);
 };
+
 
 
 const consultaSocio = (e) => {
@@ -227,7 +230,6 @@ const mostrarListado = () => {
 
 
 
-
 function crearFormularioCuota() {
 	// Borrar forms previos
 	mainContainer.innerHTML = "";
@@ -266,6 +268,7 @@ function crearFormularioCuota() {
 };
 
 
+
 function pagoCuota(socio) {
 	const vigenciaLuxon = DateTime.fromISO(socio.abono.vigencia);
 
@@ -285,6 +288,7 @@ function pagoCuota(socio) {
 		});
 	};
 };
+
 
 
 function crearFormularioEliminar() {
@@ -343,6 +347,8 @@ function crearFormularioEliminar() {
 	});
 };
 
+
+
 const eliminarSocio = dni => {
 	let consulta = socios.find(socio => socio.dni === dni);
 	let filtrados = socios.filter(socio => socio.dni != dni);
@@ -355,7 +361,12 @@ const eliminarSocio = dni => {
 };
 
 
-// Eventos
+
+
+// 	-----		Eventos
+
+// Traigo los datos del json al abrir la página
+obtenerSocios();
 
 // Este bloque es por si queda un socio en Storage sin confirmar
 let socioStorage = localStorage.getItem("socioStorage");
