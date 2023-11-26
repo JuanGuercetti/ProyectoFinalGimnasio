@@ -11,6 +11,7 @@ const DateTime = luxon.DateTime;
 const now = DateTime.now();
 
 
+
 class Socio {
 	constructor(info) {
 		this.nombre = info.nombre;
@@ -24,6 +25,24 @@ class Socio {
 
 
 // Funciones
+
+const obtenerSocios = async () => {
+	try {
+	    const response = await fetch("./data.json");
+	    const data = await response.json();
+	    return data;
+	  } 
+	  catch (error) {
+	    console.log(error);
+	    return null;
+	  }
+};
+
+
+
+let socios = obtenerSocios();
+
+
 
 
 function agregarNuevoSocio() {
@@ -78,7 +97,10 @@ const nuevoSocio = (e) => {
 	    nombre: nombre,
 	    telefono: telefono,
 	    dni: dni,
-	    abono: abono
+	    abono: {
+	    	tipo: abono,
+	    	vigencia: now.plus({ days: 30 }).toLocaleString(),
+	   },
 	};
 
 	socio = new Socio(info);
@@ -92,7 +114,7 @@ const nuevoSocio = (e) => {
 function confirmarSocio() {
 	Swal.fire({
 	 	title: 'Está a punto de agregar a un nuevo socio.',
-	 	text: `Nombre: ${socio.nombre}. Teléfono: ${socio.telefono}. DNI: ${socio.dni}. Abono: ${socio.abono}`,
+	 	text: `Nombre: ${socio.nombre}. Teléfono: ${socio.telefono}. DNI: ${socio.dni}. Abono: ${socio.abono.tipo}`,
 	 	icon: 'warning',
 	 	confirmButtonText: "Sí, seguro",
 	 	showCancelButton: true,
@@ -190,23 +212,29 @@ const consultaSocio = (e) => {
 
 const mostrarListado = async () => {
 	try {
-	    const response = await fetch("./data.json");
-	    const data = await response.json();
+		const data = await obtenerSocios();
 
+		data ? 
 	    data.forEach((item) => {
-	      let li = document.createElement("li");
-	      li.innerHTML = `
-	              <h2>Nombre: ${item.nombre}</h2>
-	              <p>Teléfono: ${item.telefono}</p>
-	              <p>DNI: ${item.dni}</p>
-	              <p>Abono: ${item.abono.tipo}</p>
-	              <p>Cuota vigente hasta: ${item.abono.vigencia}</p>
-	            `;
-
-	    	mainContainer.append(li);
-	    });
+	      let div = document.createElement("div");
+	      div.innerHTML = `
+	        <div class="card-body">
+					 	<h5 class="card-header">${item.nombre}</h5>
+					  <p class="card-text">Teléfono: ${item.telefono}</p>
+					  <p class="card-text">DNI: ${item.dni}</p>
+					  <p class="card-text">Abono: ${item.abono.tipo}</p>
+					  <p class="card-text">Cuota vigente hasta: ${item.abono.vigencia}</p>
+					</div>
+	      `;
+	      div.classList.add("card");
+	      div.style = "width: 18rem;";
+	    	mainContainer.append(div);
+	    })
+	  : console.log("Error al cargar los datos"); // notificacion
 	  } 
 	  catch (error) {
+	  	console.log("Ha surgido un error inesperado");
+	  	// poner una notificación
 	    console.log(error);
 	  }
 

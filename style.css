@@ -21,6 +21,11 @@
 .form-control {
 	width: 50%;
 }
+
+.card {
+	display: inline-block;
+	margin: 10px;
+}
 /*
 
 body {
