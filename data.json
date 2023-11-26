@@ -1,0 +1,17 @@
+[
+  {"nombre": "Jose Perez", "telefono": "3415558971", "dni": "33897651", "abono": {"tipo": "Libre", "vigencia": "2023-11-3"}},
+  {"nombre": "Maria Ramirez", "telefono": "3456080701", "dni": "40501703", "abono": {"tipo": "8 clases", "vigencia": "2023-12-11"}},
+  {"nombre": "Agustina Fernandez", "telefono": "3433675651", "dni": "36789123", "abono": {"tipo": "8 clases", "vigencia": "2023-12-10"}},
+  {"nombre": "Juan Garcia", "telefono": "3478980123", "dni": "39617385", "abono": {"tipo": "Libre", "vigencia": "2023-11-30"}},
+  {"nombre": "Heber Casas", "telefono": "3437581012", "dni": "42000789", "abono": {"tipo": "12 clases", "vigencia": "2023-10-15"}},
+  {"nombre": "Ana López", "telefono": "3498765432", "dni": "21098765", "abono": {"tipo": "8 clases", "vigencia": "2023-03-15"}},
+  {"nombre": "Carlos Rodriguez", "telefono": "3445678901", "dni": "31012345", "abono": {"tipo": "12 clases", "vigencia": "2023-08-20"}},
+  {"nombre": "Elena Martinez", "telefono": "3467890123", "dni": "41024680", "abono": {"tipo": "Libre", "vigencia": "2023-12-01"}},
+  {"nombre": "Fernando Gómez", "telefono": "3489012345", "dni": "25086420", "abono": {"tipo": "8 clases", "vigencia": "2023-06-10"}},
+  {"nombre": "Gabriela Herrera", "telefono": "3470123456", "dni": "45013570", "abono": {"tipo": "12 clases", "vigencia": "2023-11-25"}},
+  {"nombre": "Hugo Sánchez", "telefono": "3456789012", "dni": "26048901", "abono": {"tipo": "Libre", "vigencia": "2024-01-05"}},
+  {"nombre": "Iván Castro", "telefono": "3432109876", "dni": "36072315", "abono": {"tipo": "8 clases", "vigencia": "2023-05-18"}},
+  {"nombre": "Julia González", "telefono": "3412345678", "dni": "47024680", "abono": {"tipo": "12 clases", "vigencia": "2023-10-30"}},
+  {"nombre": "Lucas Ríos", "telefono": "3490123456", "dni": "28086420", "abono": {"tipo": "Libre", "vigencia": "2023-11-15"}},
+  {"nombre": "Marta Silva", "telefono": "3467890123", "dni": "49013570", "abono": {"tipo": "8 clases", "vigencia": "2023-02-28"}}
+]

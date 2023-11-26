@@ -3,6 +3,7 @@
 const btnAgregar = document.getElementById("btnAgregar");
 const btnConsultas = document.getElementById("btnConsultas");
 const btnPagoCuota = document.getElementById("btnPagoCuota");
+const btnListado = document.getElementById("btnListado");
 
 const mainContainer = document.getElementById("mainContainer");
 
@@ -18,15 +19,6 @@ class Socio {
 		this.abono = info.abono;
 	}
 };
-
-const socios = [
-	{nombre: "Jose Perez", telefono: "3415558971", dni: "33897651", abono:{ tipo: "Libre", vigencia: "2023-11-3" }},
-	{nombre: "Maria Ramirez", telefono: "3456080701", dni: "40501703", abono:{ tipo: "8 clases", vigencia: "2023-12-11" }},
-	{nombre: "Agustina Fernandez", telefono: "3433675651", dni: "36789123", abono:{ tipo: "8 clases", vigencia: "2023-12-10" }},
-	{nombre: "Juan Garcia", telefono: "3478980123", dni: "39617385", abono:{ tipo: "Libre", vigencia: "2023-11-30" }},
-	{nombre: "Heber Casas", telefono: "3437581012", dni: "42000789", abono:{ tipo: "12 clases", vigencia: "2023-10-15" }},
-];
-
 
 
 
@@ -195,10 +187,31 @@ const consultaSocio = (e) => {
 };	
 
 
-function mostrarListado() {
-	// hacer async y que traiga los datos del json
-	// socios.forEach(Hacer una card, código HTML)
-}
+
+const mostrarListado = async () => {
+	try {
+	    const response = await fetch("./data.json");
+	    const data = await response.json();
+
+	    data.forEach((item) => {
+	      let li = document.createElement("li");
+	      li.innerHTML = `
+	              <h2>Nombre: ${item.nombre}</h2>
+	              <p>Teléfono: ${item.telefono}</p>
+	              <p>DNI: ${item.dni}</p>
+	              <p>Abono: ${item.abono.tipo}</p>
+	              <p>Cuota vigente hasta: ${item.abono.vigencia}</p>
+	            `;
+
+	    	mainContainer.append(li);
+	    });
+	  } 
+	  catch (error) {
+	    console.log(error);
+	  }
+
+	// min 31 after asincronismo
+};
 
 
 function crearFormularioCuota() {
@@ -276,4 +289,6 @@ btnAgregar.addEventListener("click", agregarNuevoSocio);
 btnConsultas.addEventListener("click", crearConsulta);
 
 btnPagoCuota.addEventListener("click", crearFormularioCuota);
+
+btnListado.addEventListener("click", mostrarListado);
 
