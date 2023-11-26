@@ -21,15 +21,16 @@ class Socio {
 	}
 };
 
-
+let socios = [];
 
 
 // Funciones
 
 const obtenerSocios = async () => {
 	try {
-	    const response = await fetch("./data.json");
-	    const data = await response.json();
+	    let response = await fetch("./data.json");
+	    let data = await response.json();
+	    socios = data;
 	    return data;
 	  } 
 	  catch (error) {
@@ -38,10 +39,8 @@ const obtenerSocios = async () => {
 	  }
 };
 
-
-
-let socios = obtenerSocios();
-
+// Traigo los datos del json al abrir la página
+obtenerSocios();
 
 
 
@@ -100,13 +99,15 @@ const nuevoSocio = (e) => {
 	    abono: {
 	    	tipo: abono,
 	    	vigencia: now.plus({ days: 30 }).toLocaleString(),
+	 			// simula que al agregar un nuevo socio paga la cuota
 	   },
 	};
 
 	socio = new Socio(info);
-    localStorage.setItem("socioStorage", JSON.stringify(socio));
+  localStorage.setItem("socioStorage", JSON.stringify(socio));
+  // lleva el socio al storage en caso de que se cierre la página sin confirmar
 
-    confirmarSocio();
+  confirmarSocio();
 };
 
 
@@ -122,13 +123,10 @@ function confirmarSocio() {
 	}).then((result) => {
 
 	    if (result.isConfirmed) {
-
 	    	socios.push(JSON.parse(localStorage.getItem("socioStorage")));
-
-	    	// Ver a donde envia los socios creados
+	    	//lleva el objeto desde el storage hacia el array socios
 
 	    	localStorage.clear();
-
 	      Swal.fire({
 		      title: "Agregado!",
 		      icon: "success",
@@ -136,9 +134,7 @@ function confirmarSocio() {
 	      });
 	    }
 	    else {
-
 	    	localStorage.clear();
-
 	      Swal.fire({
 		      title: "Borrado",
 		      icon: "error",
@@ -149,15 +145,24 @@ function confirmarSocio() {
 };
 
 
+
+
+//////////////////////		darle bootstrap al formulario
+
+
+
+
 function crearConsulta() {
 	// Borrar forms previos
 	mainContainer.innerHTML = "";
 
 	// Crear form
 	let form = document.createElement("form");
-	form.innerHTML = `<h3>Ingrese el número de DNI del socio a consultar</h3>
-					 <input type="text">
-					 <input type="submit" value="Consultar" class="btnForm">`;
+	form.innerHTML = `
+		<h3>Ingrese el número de DNI del socio a consultar</h3>
+		<input type="text">
+		<input type="submit" value="Consultar" class="btnForm">
+	`;
 	form.id = "form-consultas";
 	form.classList.add("formulario");
 	mainContainer.append(form);
@@ -167,80 +172,70 @@ function crearConsulta() {
 	formConsultas.addEventListener("submit", consultaSocio);
 };
 
-/*
-const consultaSocio = (e,funcion) => {
-	e.preventDefault();
-
-	let dni = e.target.elements[0].value;
-	let consulta = socios.find(socio => socio.dni === dni);
-
-	funcion;
-};	*/
-
-
-
 
 const consultaSocio = (e) => {
-	// hacer async y que traiga los datos del json
-
 	e.preventDefault();
 
 	let dni = e.target.elements[0].value;
 	let consulta = socios.find(socio => socio.dni === dni);
 
-	if (consulta) {
-		Swal.fire({
-		  title: "Socio encontrado",
-		  icon: "success",
-		  text: `
-			  Nombre: ${consulta.nombre}.
-				Teléfono: ${consulta.telefono}.
-				DNI: ${consulta.dni}.
-				Abono: ${consulta.abono.tipo} ${consulta.abono.vigencia}.`,
-	  });
-	}
-	else {
-		Swal.fire({
-		  title: "No encontrado",
-		  icon: "error",
-		  text: `No se ha encontrado el socio con DNI: "${dni}"`,
-	  });
-	}
+	consulta 
+		?
+			Swal.fire({
+			  title: "Socio encontrado",
+			  icon: "success",
+			  text: `
+				  Nombre: ${consulta.nombre}.
+					Teléfono: ${consulta.telefono}.
+					DNI: ${consulta.dni}.
+					Abono: ${consulta.abono.tipo}. 
+					Cuota vigente hasta: ${consulta.abono.vigencia}.`,
+		  })
+		:
+			Swal.fire({
+			  title: "No encontrado",
+			  icon: "error",
+			  text: `No se ha encontrado el socio con DNI: "${dni}"`,
+		  });
 };	
 
 
 
 const mostrarListado = async () => {
+	// Borrar forms previos
+	mainContainer.innerHTML = "";
+
 	try {
-		const data = await obtenerSocios();
+    await obtenerSocios();
 
-		data ? 
-	    data.forEach((item) => {
-	      let div = document.createElement("div");
-	      div.innerHTML = `
-	        <div class="card-body">
-					 	<h5 class="card-header">${item.nombre}</h5>
-					  <p class="card-text">Teléfono: ${item.telefono}</p>
-					  <p class="card-text">DNI: ${item.dni}</p>
-					  <p class="card-text">Abono: ${item.abono.tipo}</p>
-					  <p class="card-text">Cuota vigente hasta: ${item.abono.vigencia}</p>
-					</div>
-	      `;
-	      div.classList.add("card");
-	      div.style = "width: 18rem;";
-	    	mainContainer.append(div);
-	    })
-	  : console.log("Error al cargar los datos"); // notificacion
-	  } 
-	  catch (error) {
-	  	console.log("Ha surgido un error inesperado");
-	  	// poner una notificación
-	    console.log(error);
-	  }
-
-	// min 31 after asincronismo
+    socios
+      ? 
+      	socios.forEach((item) => {
+          let div = document.createElement("div");
+          div.innerHTML = `
+            <div class="card-body">
+              <h5 class="card-header">${item.nombre}</h5>
+              <p class="card-text">Teléfono: ${item.telefono}</p>
+              <p class="card-text">DNI: ${item.dni}</p>
+              <p class="card-text">Abono: ${item.abono.tipo}</p>
+              <p class="card-text">Cuota vigente hasta: ${item.abono.vigencia}</p>
+            </div>
+          `;
+          div.classList.add("card");
+          div.style = "width: 18rem;";
+          mainContainer.append(div);
+        })
+      : 
+      	console.log("Error al cargar los datos"); // notificación
+  } catch (error) {
+    console.log("Ha surgido un error inesperado al cargar los datos");
+    console.log(error);
+  }
 };
 
+
+
+//////////////////////		darle bootstrap al formulario
 
 function crearFormularioCuota() {
 	// Borrar forms previos
@@ -248,9 +243,11 @@ function crearFormularioCuota() {
 
 	// Crear form
 	let form = document.createElement("form");
-	form.innerHTML = `<h3>Ingrese el número de DNI del socio</h3>
-					 <input type="text">
-					 <input type="submit" value="Pagar" class="btnForm">`;
+	form.innerHTML = 
+		`<h3>Ingrese el número de DNI del socio</h3>
+		<input type="text">
+		<input type="submit" value="Pagar" class="btnForm">
+		`;
 	form.id = "form-cuota";
 	form.classList.add("formulario");
 	mainContainer.append(form);
@@ -262,13 +259,12 @@ function crearFormularioCuota() {
 		e.preventDefault();
 		let dni = e.target.elements[0].value;
 		let consulta = socios.find(socio => socio.dni === dni);
-		
-		if (consulta) {
-			pagoCuota(consulta);
-		}
-		else {
-			console.log("Socio no trovato");
-		}
+
+		consulta
+			?
+				pagoCuota(consulta)
+			:
+				console.log("Socio no trovato");
 	});
 };
 
@@ -287,7 +283,6 @@ function pagoCuota(socio) {
 
 
 function eliminarSocio(dni) {
-	// hacer async y que traiga los datos del json
 	// let filtrados = socios.filter((socio) => socio.dni != dni)
 	// min 30 after storage
 }
