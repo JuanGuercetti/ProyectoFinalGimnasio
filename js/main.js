@@ -1,5 +1,6 @@
 import { crearFormSocio, socioPendiente } from './agregarModule.js';
-
+import { crearConsulta } from './consultaModule.js';
+import { crearFormularioEliminar, sociosFiltrados } from './eliminarModule.js';
 
 
 //		-----		Variables
@@ -49,160 +50,6 @@ const obtenerSocios = async () => {
 	    return null;
 	  }
 };
-
-
-/*
-function agregarNuevoSocio() {
-	limpiarDom();
-
-	// Crear form
-	let form = document.createElement("form");
-	form.innerHTML = `
-		<div class="mb-3 row justify-content-center">
-		  <label class="form-label">Nombre y Apellido</label>
-		  <input type="text" class="form-control">
-		</div>
-		<div class="mb-3 row justify-content-center">
-		  <label class="form-label">Número de teléfono</label>
-		  <input type="text" class="form-control">
-		</div>
-	    <div class="mb-3 row justify-content-center">
-		  <label class="form-label">DNI</label>
-		  <input type="text" class="form-control">
-		</div>
-		<div class="mb-3 row justify-content-center">
-			<label class="form-label">Abono</label>
-		  	<select class="form-select form-control">
-			  <option value="8 clases">8 clases</option>
-			  <option value="12 clases">12 clases</option>
-			  <option value="Libre">Libre</option>
-			</select>
-		</div>   
-    <input type="submit" value="Agregar nuevo socio" class="btn btn-lg btn-outline-danger text-light row justify-content-center">
-	`;
-	form.id = "form-agregar";
-	form.classList.add("form-control-lg","bg-dark","text-light");
-	mainContainer.append(form);
-
-	// Obtener los datos del form
-	let formAgregar = document.getElementById("form-agregar");
-	formAgregar.addEventListener("submit", nuevoSocio);
-};
-
-
-
-const nuevoSocio = (e) => {
-	e.preventDefault();
-
-	let inputs = e.target.elements;
-	let nombre = inputs[0].value;
-	let telefono = inputs[1].value;
-	let dni = inputs[2].value;
-	let abono = inputs[3].value;
-	
-	let info = {
-	    nombre: nombre,
-	    telefono: telefono,
-	    dni: dni,
-	    abono: {
-	    	tipo: abono,
-	    	vigencia: now.plus({ days: 30 }).toLocaleString(),
-	 			// simula que al agregar un nuevo socio paga la cuota
-	   },
-	};
-
-	socio = new Socio(info);
-  localStorage.setItem("socioStorage", JSON.stringify(socio));
-  // lleva el socio al storage en caso de que se cierre la página sin confirmar
-
-  confirmarSocio();
-};
-
-
-
-function confirmarSocio() {
-	Swal.fire({
-	 	title: 'Está a punto de agregar a un nuevo socio.',
-	 	text: `Nombre: ${socio.nombre}. Teléfono: ${socio.telefono}. DNI: ${socio.dni}. Abono: ${socio.abono.tipo}`,
-	 	icon: 'warning',
-	 	confirmButtonText: "Sí, seguro",
-	 	showCancelButton: true,
-    cancelButtonText: "No, eliminar socio",
-	}).then((result) => {
-
-	    if (result.isConfirmed) {
-	    	socios.push(JSON.parse(localStorage.getItem("socioStorage")));
-	    	//lleva el objeto desde el storage hacia el array socios
-
-	    	localStorage.clear();
-	      Swal.fire({
-		      title: "Agregado!",
-		      icon: "success",
-		      text: "El socio ha sido añadido con éxito!",
-	      });
-	    }
-	    else {
-	    	localStorage.clear();
-	      Swal.fire({
-		      title: "Borrado",
-		      icon: "error",
-		      text: "El socio no fue agregado",
-	     	});
-	    }
-   });
-};
-*/
-
-
-function crearConsulta() {
-	limpiarDom();
-
-	// Crear form
-	let form = document.createElement("form");
-	form.innerHTML = `
-		<div class="mb-3 row justify-content-center">
-		  <label class="form-label">Ingrese el número de DNI del socio a consultar</label>
-		  <input type="text" class="form-control">
-		</div>
-		<input type="submit" value="Consultar" class="btn btn-lg btn-outline-danger text-light row justify-content-center">
-	`;
-	form.id = "form-consultas";
-	form.classList.add("form-control-lg","bg-dark","text-light");
-	mainContainer.append(form);
-
-	// Obtener información del form
-	let formConsultas = document.getElementById("form-consultas");
-	formConsultas.addEventListener("submit", consultaSocio);
-};
-
-
-
-const consultaSocio = (e) => {
-	e.preventDefault();
-
-	let dni = e.target.elements[0].value;
-	let consulta = socios.find(socio => socio.dni === dni);
-
-	consulta 
-		?
-			Swal.fire({
-			  title: "Socio encontrado",
-			  icon: "success",
-			  text: `
-				  Nombre: ${consulta.nombre}.
-					Teléfono: ${consulta.telefono}.
-					DNI: ${consulta.dni}.
-					Abono: ${consulta.abono.tipo}. 
-					Cuota vigente hasta: ${consulta.abono.vigencia}.`,
-		  })
-		:
-			Swal.fire({
-			  title: "No encontrado",
-			  icon: "error",
-			  text: `No se ha encontrado el socio con DNI: "${dni}"`,
-		  });
-};	
-
 
 
 const mostrarListado = () => {
@@ -294,7 +141,7 @@ function pagoCuota(socio) {
 };
 
 
-
+/*
 function crearFormularioEliminar() {
 	limpiarDom();
 
@@ -362,7 +209,7 @@ const eliminarSocio = dni => {
 		text: `El socio ${consulta.nombre} con DNI: ${consulta.dni} ha sido eliminado del sistema.`,
 	});
 };
-
+*/
 
 
 
@@ -384,4 +231,7 @@ btnPagoCuota.addEventListener("click", crearFormularioCuota);
 
 btnListado.addEventListener("click", mostrarListado);
 
-btnEliminar.addEventListener("click", crearFormularioEliminar);
+btnEliminar.addEventListener("click", ()=> {
+	crearFormularioEliminar();
+	sociosFiltrados && (socios = sociosFiltrados);
+});
