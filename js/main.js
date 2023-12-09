@@ -1,4 +1,4 @@
-import { agregarNuevoSocio } from './agregarModule.js';
+import { crearFormSocio, socioPendiente } from './agregarModule.js';
 
 
 
@@ -373,22 +373,10 @@ obtenerSocios();
 
 // Este bloque es por si queda un socio en Storage sin confirmar
 let socioStorage = localStorage.getItem("socioStorage");
-if (socioStorage) {
-	Toastify({
-	    text: "Hay un socio sin confirmar!",
-	    duration: 3000,
-	    gravity: 'bottom',
-	    style: {
-	    background: "linear-gradient(to left, rgb(200, 20, 20), rgb(30, 30, 30)",
-	    },
-	    onClick: () => {
-	    	socio = JSON.parse(socioStorage);
-	    	confirmarSocio();	       
-        }
-	}).showToast();
-};
+socioStorage && socioPendiente();
 
-btnAgregar.addEventListener("click", agregarNuevoSocio);
+
+btnAgregar.addEventListener("click", crearFormSocio);
 
 btnConsultas.addEventListener("click", crearConsulta);
 

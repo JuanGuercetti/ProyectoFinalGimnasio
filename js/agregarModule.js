@@ -2,7 +2,7 @@ import { limpiarDom, now, Socio, socios } from './main.js';
 
 let socio;
 
-export function agregarNuevoSocio() {
+export function crearFormSocio() {
 	limpiarDom();
 
 	// Crear form
@@ -60,11 +60,11 @@ const nuevoSocio = (e) => {
 	   },
 	};
 
-	socio = new Socio(info);
-  localStorage.setItem("socioStorage", JSON.stringify(socio));
-  // lleva el socio al storage en caso de que se cierre la página sin confirmar
+    socio = new Socio(info);
+    localStorage.setItem("socioStorage", JSON.stringify(socio));
+    // lleva el socio al storage en caso de que se cierre la página sin confirmar
 
-  confirmarSocio();
+    confirmarSocio();
 };
 
 
@@ -79,8 +79,7 @@ function confirmarSocio() {
 	}).then((result) => {
 
 	    if (result.isConfirmed) {
-	    	socios.push(JSON.parse(localStorage.getItem("socioStorage")));
-	    	//lleva el objeto desde el storage hacia el array socios
+            socios.push(socio);
 
 	    	localStorage.clear();
 	      Swal.fire({
@@ -99,3 +98,19 @@ function confirmarSocio() {
 	    }
    });
 };
+
+
+export function socioPendiente() {
+    Toastify({
+	    text: "Hay un socio sin confirmar!",
+	    duration: 3000,
+	    gravity: 'bottom',
+	    style: {
+	    background: "linear-gradient(to left, rgb(200, 20, 20), rgb(30, 30, 30)",
+	    },
+	    onClick: () => {
+            socio = JSON.parse(localStorage.getItem("socioStorage"));
+	    	confirmarSocio();	       
+        }
+	}).showToast();
+}
