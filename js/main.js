@@ -1,3 +1,7 @@
+import { agregarNuevoSocio } from './agregarModule.js';
+
+
+
 //		-----		Variables
 
 
@@ -10,10 +14,10 @@ const btnEliminar = document.getElementById("btnEliminar");
 const mainContainer = document.getElementById("mainContainer");
 
 const DateTime = luxon.DateTime;
-const now = DateTime.now();
+export const now = DateTime.now();
 
 
-class Socio {
+export class Socio {
 	constructor(info) {
 		this.nombre = info.nombre;
 		this.telefono = info.telefono;
@@ -22,12 +26,16 @@ class Socio {
 	}
 };
 
-let socios = [];
+export let socios = [];
 
 
 
 
 // 		-----		 Funciones
+
+export function limpiarDom(){
+	mainContainer.innerHTML = "";
+}
 
 const obtenerSocios = async () => {
 	try {
@@ -43,10 +51,9 @@ const obtenerSocios = async () => {
 };
 
 
-
+/*
 function agregarNuevoSocio() {
-	// Borrar forms previos
-	mainContainer.innerHTML = "";
+	limpiarDom();
 
 	// Crear form
 	let form = document.createElement("form");
@@ -144,12 +151,11 @@ function confirmarSocio() {
 	    }
    });
 };
-
+*/
 
 
 function crearConsulta() {
-	// Borrar forms previos
-	mainContainer.innerHTML = "";
+	limpiarDom();
 
 	// Crear form
 	let form = document.createElement("form");
@@ -200,8 +206,7 @@ const consultaSocio = (e) => {
 
 
 const mostrarListado = () => {
-	// Borrar forms previos
-	mainContainer.innerHTML = "";
+	limpiarDom();
 
   socios
     ? 
@@ -231,8 +236,7 @@ const mostrarListado = () => {
 
 
 function crearFormularioCuota() {
-	// Borrar forms previos
-	mainContainer.innerHTML = "";
+	limpiarDom();
 
 	// Crear form
 	let form = document.createElement("form");
@@ -292,8 +296,7 @@ function pagoCuota(socio) {
 
 
 function crearFormularioEliminar() {
-	// Borrar forms previos
-	mainContainer.innerHTML = "";
+	limpiarDom();
 
 	// Crear form
 	let form = document.createElement("form");
