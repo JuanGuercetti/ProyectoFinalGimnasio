@@ -3,7 +3,7 @@ import { limpiarDom, socios, mainContainer } from './main.js';
 
 export const mostrarListado = () => {
 	limpiarDom();
-    mainContainer.innerHTML = "<h2>Cargando..</h2>";
+    mainContainer.innerHTML = "<h2>Cargando...</h2>";
 
     socios && socios.length > 0
     ?   

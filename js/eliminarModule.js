@@ -1,6 +1,6 @@
 import { limpiarDom, socios } from './main.js';
 
-let sociosFiltrados;
+export let sociosFiltrados;
 
 export function crearFormularioEliminar() {
 	limpiarDom();
@@ -61,13 +61,10 @@ export function crearFormularioEliminar() {
 
 const eliminarSocio = dni => {
 	let consulta = socios.find(socio => socio.dni === dni);
-	let filtrados = socios.filter(socio => socio.dni != dni);
-	sociosFiltrados = filtrados;
+	sociosFiltrados = socios.filter(socio => socio.dni != dni);
 	Swal.fire({
 		title: "Socio eliminado con éxito",
 		icon: "success",
 		text: `El socio ${consulta.nombre} con DNI: ${consulta.dni} ha sido eliminado del sistema.`,
 	});
 };
-
-export { sociosFiltrados };
