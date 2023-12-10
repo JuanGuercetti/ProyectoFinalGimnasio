@@ -1,10 +1,10 @@
 import { crearFormSocio, socioPendiente } from './agregarModule.js';
 import { crearConsulta } from './consultaModule.js';
 import { crearFormularioEliminar, sociosFiltrados } from './eliminarModule.js';
+import { mostrarListado } from './listadoModule.js';
 
 
 //		-----		Variables
-
 
 const btnAgregar = document.getElementById("btnAgregar");
 const btnConsultas = document.getElementById("btnConsultas");
@@ -12,11 +12,10 @@ const btnPagoCuota = document.getElementById("btnPagoCuota");
 const btnListado = document.getElementById("btnListado");
 const btnEliminar = document.getElementById("btnEliminar");
 
-const mainContainer = document.getElementById("mainContainer");
+export const mainContainer = document.getElementById("mainContainer");
 
 const DateTime = luxon.DateTime;
 export const now = DateTime.now();
-
 
 export class Socio {
 	constructor(info) {
@@ -50,36 +49,6 @@ const obtenerSocios = async () => {
 	    return null;
 	  }
 };
-
-
-const mostrarListado = () => {
-	limpiarDom();
-
-  socios
-    ? 
-    	socios.forEach((item) => {
-       	let div = document.createElement("div");
-       	div.innerHTML = `
-        	<div class="card-body">
-          	<h5 class="card-header">${item.nombre}</h5>
-          	<p class="card-text">Teléfono: ${item.telefono}</p>
-          	<p class="card-text">DNI: ${item.dni}</p>
-          	<p class="card-text">Abono: ${item.abono.tipo}</p>
-          	<p class="card-text">Cuota vigente hasta: ${item.abono.vigencia}</p>
-        	</div>
-        `;
-        div.classList.add("card");
-        div.style = "width: 18rem;";
-        mainContainer.append(div);
-      })
-    : 
-      Swal.fire({
-				title: "Error",
-				icon: "error",
-				text: `Ha surgido un error inesperado al cargar los datos. Por favor contacte a soporte.`,
-			});
-};
-
 
 
 function crearFormularioCuota() {

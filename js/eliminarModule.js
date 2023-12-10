@@ -1,6 +1,6 @@
 import { limpiarDom, socios } from './main.js';
 
-export let sociosFiltrados;
+let sociosFiltrados;
 
 export function crearFormularioEliminar() {
 	limpiarDom();
@@ -69,3 +69,5 @@ const eliminarSocio = dni => {
 		text: `El socio ${consulta.nombre} con DNI: ${consulta.dni} ha sido eliminado del sistema.`,
 	});
 };
+
+export { sociosFiltrados };
